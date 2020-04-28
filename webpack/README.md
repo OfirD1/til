@@ -29,7 +29,7 @@ module.exports = Hello2;
 ```
         
 * *Note:*  
-  *1. `module.exports = foo` is equivalent to `export default foo`*.  
+  *1. `module.exports = foo` is equivalent to `export default foo`* (see [here](https://stackoverflow.com/a/34795237/3002584)).  
   *2. Using `export default` as a practice is arguable, but I came across it when working with `CoffeeScript` generated files.*   
   
        
