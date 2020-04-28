@@ -3,7 +3,7 @@
 ### Exposing a bundle as a global variable  
 
 
-Suppose `demo.html` needs to use a `<script>` tag to load a bundle of `.js` files:  
+Suppose `demo.html` needs to use a ***single*** `<script>` tag to load a bundle of `.js` files:  
 
 ```
 webpack-demo
