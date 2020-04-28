@@ -30,7 +30,7 @@ module.exports = Hello2;
         
 * *Note:*  
   *1. `module.exports = foo` is equivalent to `export default foo`*.  
-  *2. Using `export default` as a practice is arguable, but I came across this kind of usage when using a `CoffeeScript` generated files.*   
+  *2. Using `export default` as a practice is arguable, but I came across it when working with `CoffeeScript` generated files.*   
   
        
 Here's how to bundle these exports using Webpack:  
