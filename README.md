@@ -5,7 +5,7 @@ A collection of concise write-ups on small things I learn day to day across a va
 
 
 ### Tools
--   [Webpack](https://github.com/HeyJude1/til/webpack)
+-   [Webpack](https://github.com/HeyJude1/til/tree/master/webpack)
 
 ### Internals
--   [Encoding](https://github.com/HeyJude1/til/encoding)
+-   [Encoding](https://github.com/HeyJude1/til/tree/master/encoding)
