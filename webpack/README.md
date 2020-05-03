@@ -14,13 +14,13 @@ webpack-demo
     
 Where each `.js` file has a `default` export in a slightly different way:  
     
-```
+```javascript
 // hello1.js
 module.exports = {
   hello1: function () { console.log('hello1'); }
 }; 
 ```
-```
+```javascript
 // hello2.js
 var Hello2 = {
   hello2: function () { console.log('hello2'); }
@@ -38,7 +38,7 @@ Here's how to bundle these exports using Webpack:
    1. Create `index.js`:  
         
       *Let's suffix the names with an `X` to easily differ the original objects from the current ones*  
-       ```
+       ```javascript
        module.exports = {
          hello1X: require("./hello1"),
          hello2X: require("./hello2")
@@ -47,7 +47,7 @@ Here's how to bundle these exports using Webpack:
      
    2. Create `webpack.config.js`:  
      
-      ```
+      ```javascript
       const path = require('path');
       module.exports = {
         entry: './index.js',
@@ -81,7 +81,7 @@ webpack-demo
   |- webpack.config.js
 ```
 Finally, in our `demo.html` file:
-```
+```html
 <script src="./dist/bundle.js"></script>
 <script>
    hello.hello1X.hello1(); // prints "hello1"
