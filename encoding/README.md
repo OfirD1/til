@@ -48,7 +48,7 @@ Let's reproduce it (using C#):
 
 <sup>if you're on .Net Core, there's [another line to add](https://stackoverflow.com/a/37870346/3002584))</sup>
 
-```
+```C#
 byte[] latin = Array.ConvertAll(new int[] { 97, 98, 150, 99, 100 }, Convert.ToByte);
 string latin_windows_1252 = Encoding.GetEncoding("windows-1252").GetString(latin);
 string latin_ISO_8859_1 = Encoding.GetEncoding("iso-8859-1").GetString(latin);
@@ -61,7 +61,7 @@ File.WriteAllText("latin.txt", latin_ISO_8859_1);   // save as a .txt file.
 Now, usually, you wouldn't be the one who created this file, and therefore you wouldn't work directly with either of those encodings.  
 Instead, you'd get the file from whatever source as a Unicode encoded file.  
 To imitate this common case, let's *transcode* the original bytes to UTF-8:
-```
+```C#
 byte[] latin_transcoded = Encoding.Convert(Encoding.GetEncoding("windows-1252"), Encoding.UTF8, latin);
 string latin_utf8 = Encoding.UTF8.GetString(latin_transcoded);
 Console.WriteLine(latin_utf8); // outputs: abcd
@@ -91,7 +91,7 @@ SQL Server 2019 introduces native support for UTF-8 in `VARCHAR` and `CHAR` data
 
 ### 2. Getting underlying bytes  
 To get the hex byte representaion of a field, run:  
-```
+```SQL
 SELECT convert(varbinary(max), field_name), field_name
 FROM table_name
 ```
