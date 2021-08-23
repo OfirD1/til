@@ -1,6 +1,8 @@
 # Webpack  
 
-### Basic Bundle Creation ([source](https://webpack.js.org/guides/getting-started/), [demo](https://stackblitz.com/github/webpack/webpack.js.org/tree/master/examples/getting-started?file=README.md&terminal=))
+### Basic Bundle Creation (Which only works for use in `<script>` tag)
+
+([source](https://webpack.js.org/guides/getting-started/), [demo](https://stackblitz.com/github/webpack/webpack.js.org/tree/master/examples/getting-started?file=README.md&terminal=)) 
 
 Say that we have some `.js` file that imports some library, and an `.html` file that needs to load that `.js` file.  
 Our `.html` file shouldn't care what libraries that `.js` file loads, and just wants to load that one file and nothing more.
@@ -95,6 +97,31 @@ webpack-demo
 |- package.json
 |- webpack.config.js
 ```
+
+Finally, we run:
+`npm run start`
+And the result is a `"Hello Webpack"` div.
+
+#### However, this only works when including the bundle in a `<script>` tag!
+
+The reason is that by default, Webpack creates the bundle with a global variable named as the exported value.
+
+Read again: our exported variable is NOT exported, but simply declared as a global variable!
+
+This is the meaning of the somewhat vague description in the [documentation](https://webpack.js.org/configuration/output/#expose-via-object-assignment):
+
+> **Expose Via Object Assignment**
+>
+>These options assign the return value of the entry point (e.g. whatever the entry point exported) to a specific object under the name defined by `output.library.name`.
+> [...]
+> 
+> **Warning**
+>
+> Note that not setting a `output.library.name` will cause all properties returned by the entry point to be assigned to the given object.
+
+And somewhat more explicitly, though still quite obscure description in [expose-the-library](https://webpack.js.org/guides/author-libraries/#expose-the-library):
+
+>[Using only `library.name` or omitting it] only works when it's referenced through script tag, it can't be used in other environments like CommonJS, AMD, Node.js, etc.
 
  
 ### Exposing a bundle as a global variable  
