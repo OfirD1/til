@@ -1,5 +1,102 @@
 # Webpack  
 
+### Basic Bundle Creation ([source](https://webpack.js.org/guides/getting-started/), [demo](https://stackblitz.com/github/webpack/webpack.js.org/tree/master/examples/getting-started?file=README.md&terminal=))
+
+Say that we have some `.js` file that imports some library, and an `.html` file that needs to load that `.js` file.  
+Our `.html` file shouldn't care what libraries that `.js` file loads, and just wants to load that one file and nothing more.
+
+To make that work, we need to create a **bundle** out of our `index.js` and the imported library (which in the following example is lodash).
+
+So, here's our initial folder structure:
+
+```git
+webpack-demo
+|- /dist
+  |- index.html
+|- /src
+  |- index.js
+|- package.json
+|- webpack.config.js
+```
+
+And here are our files, one by one:
+
+**`index.js`**  
+```js
+import _ from 'lodash'; // <-- importing lodash
+function component() {
+  const element = document.createElement('div');
+  element.innerHTML = _.join(['Hello', 'Webpack'], ' '); // <-- using lodash
+  return element;
+}
+// appends "Hello Webpack" to document.body
+document.body.appendChild(component());
+```
+
+**`index.html`**  
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Getting Started</title>
+  </head>
+  <body>
+    <script src="main.js"></script> <-- loading 
+  </body>
+</html>
+```
+
+**`webpack.config.js`**  
+```js
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+};
+```
+
+**`package.json`**
+```json
+{
+  "scripts": {
+    "build": "webpack",
+    "start": "serve dist"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "serve": "^12.0.0",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
+```
+
+We now run:
+1. `npm install` 
+2. `npm run build`
+
+And now this is how our folder stucture look:
+
+```git
+webpack-demo
+|- /dist
+  |- index.html
+  |- main.js     <-- created
+|- /src
+  |- index.js
+|- /node_modules <-- created
+|- package.json
+|- webpack.config.js
+```
+
+ 
 ### Exposing a bundle as a global variable  
 
 
