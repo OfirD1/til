@@ -212,3 +212,94 @@ Finally, in our `demo.html` file:
    hello.hello2X.hello2(); // prints "hello2"
 </script>
 ```
+
+### Build an ES module bundle, and consume that bundle in a Node.js ES module
+
+([source](https://stackoverflow.com/questions/68913996/use-webpack-5-to-build-an-es-module-bundle-and-consume-that-bundle-in-a-node-js) 
+
+It's possible to use Webpack 5 to build an ES module bundle, and then consume that bundle in a Node.js ES module.
+
+To do that, `webpack.config.js` will *also* need to be written in ES Modules syntax.
+
+So, here's our initial folder structure:  
+
+    |- webpack.config.js
+    |- package.json
+    |- /src
+      |- index.js
+
+**`index.js`**
+
+    function util() {
+    	return "I'm a util!";
+    }
+    export default util;
+
+**`webpack.config.js`**
+
+    import path from "path";
+    import { fileURLToPath } from "url";
+
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+    export default {
+      mode: "development",     
+      entry: "./src/index.js",
+      output: {
+        filename: "bundle.js",
+        path: path.resolve(__dirname, "dist"),
+        library: {
+          type: "module",
+        },
+      },
+      experiments: {
+        outputModule: true,
+      },
+    };
+
+**`package.json`**  
+
+    {
+      "name": "exporter",
+      "version": "1.0.0",
+      "main": "dist/bundle.js",
+      "scripts": {
+        "build": "webpack"
+      },
+      "devDependencies": {
+        "webpack": "^5.51.1",
+        "webpack-cli": "^4.8.0"
+      },
+      "type": "module"
+    }
+
+After running `npm run build`, we get:
+
+    |- webpack.config.js
+    |- package.json
+    |- /src
+      |- index.js
+    |- /dist
+      |- bundle.js
+
+Great, now we want to just create some "demo" file `importer.js` which would import `util` and use it. For convenience, let's create it on the same folder:
+
+    |- importer.js
+    |- webpack.config.js
+    |- package.json
+    |- /src
+      |- index.js
+    |- /dist
+      |- bundle.js
+
+**`importer.js`**  
+
+    import util from './dist/bundle.js';
+    
+    console.log(util());
+    
+Finally, run:
+```bash
+⚡  node importer.js 
+I'm a util!
+```
